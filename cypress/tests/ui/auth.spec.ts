@@ -17,17 +17,17 @@ describe("User Sign-up and Login", function () {
     });
   });
 
-  it("should redirect unauthenticated user to signin page", function () {
-    cy.visit("/personal");
-    cy.location("pathname").should("equal", "/signin");
-    cy.visualSnapshot("Redirect to SignIn");
-  });
-
   it("should redirect to the home page after login", function () {
     cy.database("find", "users").then((user: User) => {
       cy.login(user.username, "s3cret", { rememberUser: true });
     });
     cy.location("pathname").should("equal", "/");
+  });
+
+  it("should redirect unauthenticated user to signin page", function () {
+    cy.visit("/personal");
+    cy.location("pathname").should("equal", "/signin");
+    cy.visualSnapshot("Redirect to SignIn");
   });
 
   it("should remember a user for 30 days after login", function () {
